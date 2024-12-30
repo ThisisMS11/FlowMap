@@ -2,7 +2,6 @@ import React from 'react';
 import * as LucideIcons from 'lucide-react';
 
 const DynamicLucidIcon = ({ iconName, size = 24, color = "black" }: any) => {
-    console.log({iconName})
     // @ts-ignore 
     const IconComponent = LucideIcons[iconName];
 
