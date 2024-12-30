@@ -1,0 +1,23 @@
+Analyze the following technical process description and extract:  
+1. Main steps in chronological order  
+2. Sub-steps or related processes for each main step  
+3. Technical terms and their relationships  
+4. Any verified and accurate lucid icons names (you can use web to verify) that would represent each step.  
+
+Text: """  
+<Insert your technical process description here>  
+"""  
+
+Return the response in the following JSON format:  
+```json  
+{
+  "steps": [
+    {
+      "title": "step title",
+      "icon": "accurate CloudIcon name or equivalent visual element",
+      "subSteps": ["related sub-step"],
+      "position": "above/below timeline",
+      "technicalTerms": ["associated terms"]
+    }
+  ]
+}  
