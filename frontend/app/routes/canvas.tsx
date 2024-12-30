@@ -1,70 +1,84 @@
-import React, { useCallback, useEffect,useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import {
     ReactFlow,
     useNodesState,
     useEdgesState,
     addEdge,
     Position,
-    Handle
+    Handle,
+    Background,
+    Controls
 } from '@xyflow/react';
 
 import '@xyflow/react/dist/style.css';
 
-const initialNodes = [
-    { id: '1', type: 'textUpdater', position: { x: 0, y: 0 }, data: { label: '1', icon: 'something' } },
-    { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
-    { id: '3', position: { x: 0, y: 150 }, data: { label: 'mohit' } },
-];
-const initialEdges = [{ id: 'e1-2', source: '2', target: '3' }];
+import { sampleOutput } from 'utils/sampleOutput';
+import DynamicLucidIcon from 'components/dynamic-lucid';
 
-function TextUpdaterNode({ data }: any) {
-    const onChange = useCallback((evt: any) => {
-        console.log(evt.target.value);
-    }, []);
-
+function CustomNode({ data }: any) {
     return (
-        <>
-            <Handle type="target" position={Position.Top} />
-            <div className='bb p-4 rounded-md bg-pink-500'>
-                <label htmlFor="text">Text:</label>
-                <input id="text" name="text" onChange={onChange} className="nodrag" />
+        <div className="custom-node bg-gray-100 p-4 border rounded-lg shadow-md"
+            style={{ backgroundColor: data.color }}>
+            <div className="flex  items-center">
+                {data.icon && <div className='mr-4'><DynamicLucidIcon iconName={data.icon} /></div>}
+                <p className="text-sm font-bold mt-2">{data.title}</p>
             </div>
-            <Handle type="source" position={Position.Bottom} id="a" />
-            <Handle
-                type="source"
-                position={Position.Bottom}
-                id="b"
-                style={{ left: 10 }}
-            />
-        </>
+            <Handle type="target" position={Position.Top} />
+            <Handle type="source" position={Position.Bottom} />
+        </div>
     );
 }
 
 export default function App() {
-    const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-    const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+    const [nodes, setNodes, onNodesChange] = useNodesState([]);
+    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
+    const nodeTypes = useMemo(() => ({ customNode: CustomNode }), []);
+
+    const brightColors = [
+        "#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#FFC733",
+        "#33FFF3", "#A133FF", "#FF7B33", "#33FF8C", "#FF3333",
+    ];
+
+    useEffect(() => {
+        // Generate nodes dynamically from sampleOutput
+        const generatedNodes = sampleOutput.map((step, index) => ({
+            id: `${index}`,
+            type: 'customNode',
+            position: { x: 200, y: index * 100 },
+            data: { title: step.title, icon: step.icon, color: brightColors[index % brightColors.length] },
+        }));
+
+        const generatedEdges = sampleOutput
+            .slice(1)
+            .map((_, index) => ({
+                id: `e${index}-${index + 1}`,
+                source: `${index}`,
+                target: `${index + 1}`,
+            }));
+
+        setNodes(generatedNodes);
+        setEdges(generatedEdges);
+    }, []);
 
     const onConnect = useCallback(
         (params: any) => setEdges((eds) => addEdge(params, eds)),
         [setEdges],
     );
 
-    const nodeTypes = useMemo(() => ({ textUpdater: TextUpdaterNode }), []);
-
-    useEffect(() => {
-        console.log(edges)
-    }, [edges])
-
     return (
-        <div className='h-[80vh] w-[80vw] bb'>
+        <div className="h-[100vh] w-[100vw] bb">
             <ReactFlow
-                nodeTypes={nodeTypes}
                 nodes={nodes}
                 edges={edges}
                 onNodesChange={onNodesChange}
                 onEdgesChange={onEdgesChange}
                 onConnect={onConnect}
-            />
+                nodeTypes={nodeTypes}
+            >
+                <Background />
+                <Controls />
+            </ReactFlow>
         </div>
     );
 }
