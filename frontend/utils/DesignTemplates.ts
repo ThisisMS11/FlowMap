@@ -1,9 +1,10 @@
 const designTemplates = {
     horizontal: {
-        layout: (nodes: any[]) => nodes.map((node, i) => ({
-            ...node,
-            position: { x: i * 250, y: 200 }
-        })),
+        layout: (nodes: any[]) =>
+            nodes.map((node, i) => ({
+                ...node,
+                position: { x: i * 250, y: 200 },
+            })),
         style: {
             borderRadius: '12px',
             padding: '16px 24px',
@@ -12,15 +13,16 @@ const designTemplates = {
             border: '1px solid #e2e8f0',
             color: '#1a202c',
             fontFamily: 'Arial, sans-serif',
-            transition: 'all 0.3s ease-in-out'
+            transition: 'all 0.3s ease-in-out',
         },
-        edgeType: 'smoothstep'
+        edgeType: 'smoothstep',
     },
     verticalTimeline: {
-        layout: (nodes: any[]) => nodes.map((node, i) => ({
-            ...node,
-            position: { x: 200, y: i * 150 }
-        })),
+        layout: (nodes: any[]) =>
+            nodes.map((node, i) => ({
+                ...node,
+                position: { x: 200, y: i * 150 },
+            })),
         style: {
             display: 'flex',
             flexDirection: 'column',
@@ -36,9 +38,9 @@ const designTemplates = {
             color: '#1a202c',
             fontWeight: 'bold',
             fontFamily: 'Arial, sans-serif',
-            transition: 'transform 0.3s ease'
+            transition: 'transform 0.3s ease',
         },
-        edgeType: 'step'
+        edgeType: 'step',
     },
     circularFlow: {
         layout: (nodes: any[]) => {
@@ -48,8 +50,8 @@ const designTemplates = {
                 ...node,
                 position: {
                     x: 400 + radius * Math.cos(i * angleStep),
-                    y: 400 + radius * Math.sin(i * angleStep)
-                }
+                    y: 400 + radius * Math.sin(i * angleStep),
+                },
             }));
         },
         style: {
@@ -65,10 +67,10 @@ const designTemplates = {
             fontWeight: '500',
             textAlign: 'center',
             transition: 'all 0.3s ease-in-out',
-            cursor: 'pointer'
+            cursor: 'pointer',
         },
-        edgeType: 'default'
-    }
+        edgeType: 'default',
+    },
 };
 
 export default designTemplates;
