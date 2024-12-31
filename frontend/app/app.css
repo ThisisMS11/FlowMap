@@ -147,3 +147,7 @@
         @apply bg-background text-foreground;
     }
 }
+
+.bb {
+    @apply border-2 border-black;
+}
