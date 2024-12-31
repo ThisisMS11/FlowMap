@@ -94,38 +94,6 @@ export class TimelineDesign extends BaseDesign {
     }
 
     getEdges(nodes: NodeData[]): any[] {
-        // const timelineEdge = {
-        //     id: 'timeline-line',
-        //     source: nodes[0].id,
-        //     target: nodes[nodes.length - 1].id,
-        //     type: 'custom-timeline-edge',
-        //     style: {
-        //         stroke: '#666',
-        //         strokeWidth: 2,
-        //     },
-        //     data: {
-        //         isTimeline: true,
-        //     },
-        // };
-
-        // const nodeConnections = nodes.map((node, index) => {
-        //     const isTop = index % 2 === 0;
-        //     return {
-        //         id: `connector-${index}`,
-        //         source: node.id,
-        //         target: 'timeline-line',
-        //         type: 'custom-timeline-connector',
-        //         style: {
-        //             stroke: brightColors[index % brightColors.length],
-        //             strokeWidth: 2,
-        //         },
-        //         data: {
-        //             isConnector: true,
-        //             isTop,
-        //         },
-        //     };
-        // });
-
         // return [timelineEdge, ...nodeConnections];
         return nodes.slice(1).map((_, index) => ({
             id: `e${index}-${index + 1}`,

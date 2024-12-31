@@ -37,7 +37,7 @@ import type { NodeData, DesignConfig } from '../types';
 import { sampleOutput } from 'utils/sampleOutput';
 import CustomNode from '~/components/custom-node';
 import AnimatedDashedEdge from '~/components/custom-dashed-animated-edge';
-
+import { HexColorPicker } from 'react-colorful';
 interface CanvasProps {
     onSave?: (nodes: Node[], edges: Edge[]) => void;
     initialData?: {
@@ -194,8 +194,9 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
             console.error('Error generating results:', error);
         }
 
-        setCurrentState(2);
         await new Promise((resolve) => setTimeout(resolve, 1000));
+        setCurrentState(2);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         setIsGenerating(false);
     };
 
@@ -205,6 +206,56 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
     ) => {
         setSelectedDesignId(event.target.value);
     };
+
+    const [bgColor, setBgColor] = useState('#FFFFFF');
+
+    const adjustColor = (color: string, amount: number): string => {
+        const clamp = (num: number) => Math.min(255, Math.max(0, num));
+
+        // Convert hex to RGB
+        const hex = color.replace('#', '');
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+
+        // Adjust each channel dynamically based on the amount
+        const adjust = (channel: number, factor: number) => Math.floor(channel * (1 + factor));
+
+        // Apply adjustment to each RGB channel with a dynamic factor (percentage adjustment)
+        const adjustedR = clamp(adjust(r, amount));
+        const adjustedG = clamp(adjust(g, amount));
+        const adjustedB = clamp(adjust(b, amount));
+
+        // Convert back to hex
+        const toHex = (n: number) => n.toString(16).padStart(2, '0');
+        return `#${toHex(adjustedR)}${toHex(adjustedG)}${toHex(adjustedB)}`;
+    }
+
+
+    useEffect(() => {
+        // const adjustedColor = adjustColor(bgColor, 15);
+        setNodes((nds) =>
+            nds.map((node) =>
+                node.selected
+                    ? {
+                        ...node,
+                        data: {
+                            ...node.data,
+                            style: {
+                                ...node.data.style,
+                                backgroundColor: bgColor, // Set the backgroundColor here
+                                background: '', // Ensure that background shorthand is cleared
+                            },
+                        },
+                    }
+                    : node
+            )
+        );
+
+        console.log(nodes);
+    }, [bgColor, setNodes]);
+
+
 
     return (
         <div className="flex h-screen w-full">
@@ -227,6 +278,12 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
                         >
                             Generate
                         </Button>
+
+                        <HexColorPicker
+                            color={bgColor}
+                            onChange={setBgColor}
+                        />
+
                     </SidebarMenuItem>
                 </SidebarContent>
             </Sidebar>

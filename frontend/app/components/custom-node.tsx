@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import DynamicLucidIcon from './dynamic-lucid';
-import { Handle, Position, NodeResizer, NodeToolbar } from '@xyflow/react';
-import { Button } from './ui/button';
-import { HexColorPicker } from 'react-colorful';
+import { Handle, Position, NodeResizer } from '@xyflow/react';
 
 interface CustomNodeProps {
     data: {
@@ -13,11 +11,9 @@ interface CustomNodeProps {
     };
 }
 
-const CustomNode: React.FC<CustomNodeProps> = ({ data }) => {
+const CustomNode: React.FC<CustomNodeProps> = ({ data, selected =false}: any) => {
     const [title, setTitle] = useState(data.title || 'Untitled');
     const [isEditing, setIsEditing] = useState(false);
-    const [backgroundColor, setBackgroundColor] = useState('#ffffff');
-    const [showColorPicker, setShowColorPicker] = useState(false);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
@@ -25,42 +21,15 @@ const CustomNode: React.FC<CustomNodeProps> = ({ data }) => {
 
     const style: React.CSSProperties = {
         ...data.style,
-        backgroundColor,
     };
 
     return (
         <div className="relative" style={style}>
-            <NodeResizer />
+            <NodeResizer isVisible={selected} />
 
-            <NodeToolbar position={Position.Top} className="flex gap-2">
-                <Button
-                    onClick={() => setShowColorPicker(!showColorPicker)}
-                    size="sm"
-                >
-                    {showColorPicker ? 'Close' : 'Color'}
-                </Button>
-            </NodeToolbar>
-
-            {showColorPicker && (
-                <div
-                    className="absolute left-0 -top-2 transform -translate-y-full"
-                    style={{
-                        zIndex: 1000,
-                    }}
-                >
-                    <div className="p-2 rounded-lg shadow-lg bg-white">
-                        <HexColorPicker
-                            color={backgroundColor}
-                            onChange={(color) =>
-                                setBackgroundColor(() => color)
-                            }
-                        />
-                    </div>
-                </div>
-            )}
 
             {data.icon && (
-                <div className="mr-4">
+                <div className="mr-4 icon-container">
                     <DynamicLucidIcon iconName={data.icon} />
                 </div>
             )}

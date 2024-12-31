@@ -37,8 +37,8 @@ export class PyramidDesign extends BaseDesign {
         const baseWidth = 100 - (index / totalNodes) * 50; // Gets narrower towards bottom
 
         const baseStyle = this.getBaseNodeStyle(node, index);
-        const baseColor = baseStyle.backgroundColor || '#000'; // Fallback color if undefined
-        const adjustedColor = this.adjustColor(baseColor, -20);
+        const baseColor = baseStyle.backgroundColor || '#000';
+        const adjustedColor = this.adjustColor(baseColor, 15);
 
         return {
             ...baseStyle,
@@ -105,7 +105,7 @@ export class PyramidDesign extends BaseDesign {
         }));
     }
 
-    // Helper function to adjust color brightness
+
     private adjustColor(color: string, amount: number): string {
         const clamp = (num: number) => Math.min(255, Math.max(0, num));
 
@@ -115,10 +115,13 @@ export class PyramidDesign extends BaseDesign {
         const g = parseInt(hex.substring(2, 4), 16);
         const b = parseInt(hex.substring(4, 6), 16);
 
-        // Adjust each channel
-        const adjustedR = clamp(r + amount);
-        const adjustedG = clamp(g + amount);
-        const adjustedB = clamp(b + amount);
+        // Adjust each channel dynamically based on the amount
+        const adjust = (channel: number, factor: number) => Math.floor(channel * (1 + factor));
+
+        // Apply adjustment to each RGB channel with a dynamic factor (percentage adjustment)
+        const adjustedR = clamp(adjust(r, amount));
+        const adjustedG = clamp(adjust(g, amount));
+        const adjustedB = clamp(adjust(b, amount));
 
         // Convert back to hex
         const toHex = (n: number) => n.toString(16).padStart(2, '0');
