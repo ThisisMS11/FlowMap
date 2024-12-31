@@ -151,26 +151,6 @@ export default function App() {
 
     return (
         <div className="flex h-screen w-full">
-            <Sidebar>
-                <SidebarHeader>Generate Flow</SidebarHeader>
-                <SidebarContent>
-                    <SidebarMenuItem className="p-4">
-                        <Textarea
-                            value={inputText}
-                            onChange={(e) => setInputText(e.target.value)}
-                            placeholder="Enter your text here..."
-                            className="mb-4 bg-white text-xl"
-                        />
-                        <Button
-                            onClick={handleGenerate}
-                            className="w-full bg-blue-400 hover:bg-blue-600"
-                        >
-                            Generate
-                        </Button>
-                    </SidebarMenuItem>
-                </SidebarContent>
-            </Sidebar>
-
             <SidebarTrigger />
 
             <div className="flex-1 w-3/4 relative">

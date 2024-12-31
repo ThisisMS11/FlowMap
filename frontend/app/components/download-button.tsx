@@ -6,6 +6,7 @@ import {
     getViewportForBounds,
 } from '@xyflow/react';
 import { toPng } from 'html-to-image';
+import { Download } from 'lucide-react';
 
 function downloadImage(dataUrl: string) {
     const a = document.createElement('a');
@@ -48,7 +49,7 @@ function DownloadButton() {
                 className="download-btn  rounded-lg p-4 text-white bg-blue-600"
                 onClick={onClick}
             >
-                Download Image
+                <Download />
             </button>
         </Panel>
     );

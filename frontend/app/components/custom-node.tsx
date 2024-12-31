@@ -16,7 +16,7 @@ interface CustomNodeProps {
 const CustomNode: React.FC<CustomNodeProps> = ({ data }) => {
     const [title, setTitle] = useState(data.title || 'Untitled');
     const [isEditing, setIsEditing] = useState(false);
-    const [backgroundColor, setBackgroundColor] = useState('#000000');
+    const [backgroundColor, setBackgroundColor] = useState('#ffffff');
     const [showColorPicker, setShowColorPicker] = useState(false);
 
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +30,7 @@ const CustomNode: React.FC<CustomNodeProps> = ({ data }) => {
 
     return (
         <div className="relative" style={style}>
-            <NodeResizer minWidth={100} minHeight={30} />
+            <NodeResizer />
 
             <NodeToolbar position={Position.Top} className="flex gap-2">
                 <Button
@@ -59,30 +59,28 @@ const CustomNode: React.FC<CustomNodeProps> = ({ data }) => {
                 </div>
             )}
 
-            <div className="flex items-center">
-                {data.icon && (
-                    <div className="mr-4">
-                        <DynamicLucidIcon iconName={data.icon} />
-                    </div>
-                )}
-                {isEditing ? (
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={handleTitleChange}
-                        onBlur={() => setIsEditing(false)}
-                        className="border rounded px-2 py-1 text-lg font-bold"
-                        autoFocus
-                    />
-                ) : (
-                    <p
-                        className="font-bold text-lg cursor-pointer"
-                        onClick={() => setIsEditing(true)}
-                    >
-                        {title}
-                    </p>
-                )}
-            </div>
+            {data.icon && (
+                <div className="mr-4">
+                    <DynamicLucidIcon iconName={data.icon} />
+                </div>
+            )}
+            {isEditing ? (
+                <input
+                    type="text"
+                    value={title}
+                    onChange={handleTitleChange}
+                    onBlur={() => setIsEditing(false)}
+                    className="border rounded px-2 py-1 text-2xl font-bold"
+                    autoFocus
+                />
+            ) : (
+                <p
+                    className="font-bold  cursor-pointer text-2xl"
+                    onClick={() => setIsEditing(true)}
+                >
+                    {title}
+                </p>
+            )}
             <Handle type="target" position={Position.Top} />
             <Handle type="source" position={Position.Bottom} />
         </div>

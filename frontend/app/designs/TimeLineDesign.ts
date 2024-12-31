@@ -5,6 +5,7 @@ import {
     TimelineEdge,
     TimelineConnector,
 } from '../components/TimelineComponents';
+import { MarkerType } from '@xyflow/react';
 
 export class TimelineDesign extends BaseDesign {
     id = 'timeline';
@@ -19,7 +20,7 @@ export class TimelineDesign extends BaseDesign {
         canvasHeight: number
     ): any[] {
         const timelineY = canvasHeight / 2;
-        const spacing = canvasWidth / (nodes.length + 1);
+        const spacing = canvasWidth / (nodes.length - 1);
         const verticalOffset = 120;
 
         return nodes.map((node, index) => {
@@ -27,7 +28,7 @@ export class TimelineDesign extends BaseDesign {
             return {
                 ...node,
                 position: {
-                    x: spacing * (index + 1) - 75,
+                    x: spacing * (index + 1) - 35,
                     y:
                         timelineY +
                         (isTop ? -verticalOffset : verticalOffset) -
@@ -46,13 +47,13 @@ export class TimelineDesign extends BaseDesign {
         const baseColor = this.getBaseNodeStyle(node, index).backgroundColor;
 
         return {
-            width: '150px',
-            height: '150px',
+            width: '250px',
+            height: 'fit-content',
             borderRadius: '50%',
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
+            flexDirection: 'column',
             padding: '20px',
             position: 'relative',
             border: `2px solid ${baseColor}`,
@@ -60,7 +61,6 @@ export class TimelineDesign extends BaseDesign {
                        inset 0 0 15px ${baseColor}40`,
             transition: 'all 0.3s ease-in-out',
             textAlign: 'center',
-            fontSize: '14px',
             fontWeight: '500',
             gap: '10px',
             cursor: 'pointer',
@@ -94,39 +94,48 @@ export class TimelineDesign extends BaseDesign {
     }
 
     getEdges(nodes: NodeData[]): any[] {
-        const timelineEdge = {
-            id: 'timeline-line',
-            source: nodes[0].id,
-            target: nodes[nodes.length - 1].id,
-            type: 'custom-timeline-edge',
-            style: {
-                stroke: '#666',
-                strokeWidth: 2,
-            },
-            data: {
-                isTimeline: true,
-            },
-        };
+        // const timelineEdge = {
+        //     id: 'timeline-line',
+        //     source: nodes[0].id,
+        //     target: nodes[nodes.length - 1].id,
+        //     type: 'custom-timeline-edge',
+        //     style: {
+        //         stroke: '#666',
+        //         strokeWidth: 2,
+        //     },
+        //     data: {
+        //         isTimeline: true,
+        //     },
+        // };
 
-        const nodeConnections = nodes.map((node, index) => {
-            const isTop = index % 2 === 0;
-            return {
-                id: `connector-${index}`,
-                source: node.id,
-                target: 'timeline-line',
-                type: 'custom-timeline-connector',
-                style: {
-                    stroke: brightColors[index % brightColors.length],
-                    strokeWidth: 2,
-                },
-                data: {
-                    isConnector: true,
-                    isTop,
-                },
-            };
-        });
+        // const nodeConnections = nodes.map((node, index) => {
+        //     const isTop = index % 2 === 0;
+        //     return {
+        //         id: `connector-${index}`,
+        //         source: node.id,
+        //         target: 'timeline-line',
+        //         type: 'custom-timeline-connector',
+        //         style: {
+        //             stroke: brightColors[index % brightColors.length],
+        //             strokeWidth: 2,
+        //         },
+        //         data: {
+        //             isConnector: true,
+        //             isTop,
+        //         },
+        //     };
+        // });
 
-        return [timelineEdge, ...nodeConnections];
+        // return [timelineEdge, ...nodeConnections];
+        return nodes.slice(1).map((_, index) => ({
+            id: `e${index}-${index + 1}`,
+            source: index % 2 == 0 ? nodes[index].id : nodes[index + 1].id,
+            target: index % 2 == 0 ? nodes[index + 1].id : nodes[index].id,
+            type: 'animatedDashedEdge',
+            markerEnd: {
+                type: MarkerType.Arrow,
+            },
+        }));
     }
 
     // Custom edge components for timeline and connectors

@@ -16,6 +16,7 @@ import {
     type Edge,
     type Node,
     ReactFlowProvider,
+    reconnectEdge,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import DynamicLucidIcon from '~/components/dynamic-lucid';
@@ -35,6 +36,7 @@ import designs, { getDesignById } from '../designs';
 import type { NodeData, DesignConfig } from '../types';
 import { sampleOutput } from 'utils/sampleOutput';
 import CustomNode from '~/components/custom-node';
+import AnimatedDashedEdge from '~/components/custom-dashed-animated-edge';
 
 interface CanvasProps {
     onSave?: (nodes: Node[], edges: Edge[]) => void;
@@ -67,6 +69,10 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
 
     // Memoized values
     const nodeTypes = useMemo(() => ({ customNode: CustomNode }), []);
+    const edgeTypes = useMemo(
+        () => ({ animatedDashedEdge: AnimatedDashedEdge }),
+        []
+    );
 
     const currentDesign = useMemo(
         () => getDesignById(selectedDesignId),
@@ -81,10 +87,28 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
     ];
 
     // Handle new connections between nodes
+    const edgeReconnectSuccessful = useRef(true);
+
     const onConnect = useCallback(
         (params: Connection) => setEdges((eds) => addEdge(params, eds)),
         [setEdges]
     );
+
+    const onReconnectStart = useCallback(() => {
+        edgeReconnectSuccessful.current = false;
+    }, []);
+
+    const onReconnect = useCallback((oldEdge: Edge, newConnection: any) => {
+        edgeReconnectSuccessful.current = true;
+        setEdges((els) => reconnectEdge(oldEdge, newConnection, els));
+    }, []);
+
+    const onReconnectEnd = useCallback((_: any, edge: Edge) => {
+        if (!edgeReconnectSuccessful.current) {
+            setEdges((eds) => eds.filter((e) => e.id !== edge.id));
+        }
+        edgeReconnectSuccessful.current = true;
+    }, []);
 
     // Update layout when design changes or new results are generated
     useEffect(() => {
@@ -110,12 +134,9 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
                 height
             );
 
-            console.log(`Generated Nodes : `, generatedNodes);
-
             // Apply design-specific styles
             const styledNodes = generatedNodes.map((node, index) => ({
                 ...node,
-                type: 'customNode',
                 data: {
                     ...node,
                     style: currentDesign.getNodeStyle(
@@ -188,22 +209,23 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
     return (
         <div className="flex h-screen w-full">
             {/* Sidebar */}
-            <Sidebar>
-                <SidebarHeader>Generate Flow</SidebarHeader>
-                <SidebarContent>
-                    <SidebarMenuItem className="p-4">
+            <Sidebar className="bg-gray-100 shadow-lg ">
+                <SidebarHeader className="text-lg font-semibold text-gray-800 px-4 py-3 border-b border-gray-300">
+                    Generate Flow
+                </SidebarHeader>
+                <SidebarContent className="p-4">
+                    <SidebarMenuItem className="space-y-4">
                         <Textarea
                             value={inputText}
                             onChange={(e) => setInputText(e.target.value)}
                             placeholder="Enter your text here..."
-                            className="mb-4 bg-white text-lg"
+                            className="w-full p-3 bg-white border border-gray-300 rounded-lg text-gray-700 text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
                         <Button
                             onClick={handleGenerate}
-                            className="w-full bg-blue-400 hover:bg-blue-600 text-lg"
-                            disabled={isGenerating}
+                            className="w-full py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition duration-150 ease-in-out"
                         >
-                            {isGenerating ? 'Generating...' : 'Generate'}
+                            Generate
                         </Button>
                     </SidebarMenuItem>
                 </SidebarContent>
@@ -225,10 +247,14 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
                             <ReactFlow
                                 nodes={nodes}
                                 edges={edges}
+                                edgeTypes={edgeTypes}
                                 onNodesChange={onNodesChange}
                                 onEdgesChange={onEdgesChange}
                                 onConnect={onConnect}
                                 nodeTypes={nodeTypes}
+                                onReconnect={onReconnect}
+                                onReconnectStart={onReconnectStart}
+                                onReconnectEnd={onReconnectEnd}
                                 fitView
                                 defaultViewport={{ x: 0, y: 0, zoom: 1 }}
                             >

@@ -132,7 +132,9 @@ export default function App() {
         <div className="flex h-screen w-full">
             {/* Sidebar code remains the same */}
             <Sidebar>
-                <SidebarHeader>Generate Flow</SidebarHeader>
+                <SidebarHeader className="text-3xl">
+                    Generate Flow
+                </SidebarHeader>
                 <SidebarContent>
                     <SidebarMenuItem className="p-4">
                         <Textarea

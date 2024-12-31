@@ -15,10 +15,10 @@ export class CircularDesign extends BaseDesign {
     ): any[] {
         const centerX = canvasWidth / 2;
         const centerY = canvasHeight / 2;
-        const radius = Math.min(canvasWidth, canvasHeight) * 0.35;
+        const radius = Math.min(canvasWidth, canvasHeight) * 0.5;
 
         return nodes.map((node, index) => {
-            const angle = (index / nodes.length) * 2 * Math.PI;
+            const angle = (index / nodes.length - 1) * 2 * Math.PI;
             const x = centerX + radius * Math.cos(angle);
             const y = centerY + radius * Math.sin(angle);
 
@@ -34,15 +34,15 @@ export class CircularDesign extends BaseDesign {
         return {
             ...this.getBaseNodeStyle(node, index),
             borderRadius: '50%',
+            background: `linear-gradient(135deg, #f8fafc, #e2e8f0)`,
             width: 'fit-content',
             height: '120px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            transition: 'all 0.3s ease-in-out',
             boxShadow:
-                '0px 4px 10px rgba(0, 0, 0, 0.25), 0px 1px 3px rgba(0, 0, 0, 0.15)', // Subtle shadow with depth
-            // @ts-ignore
-            // textAlign: 'center',
+                '0px 4px 10px rgba(0, 0, 0, 0.25), 0px 1px 3px rgba(0, 0, 0, 0.15)',
         };
     }
 

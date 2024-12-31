@@ -36,16 +36,17 @@ export class PyramidDesign extends BaseDesign {
         const levelDepth = 1 - index / totalNodes; // 1 at top, smaller towards bottom
         const baseWidth = 100 - (index / totalNodes) * 50; // Gets narrower towards bottom
 
+        const baseStyle = this.getBaseNodeStyle(node, index);
+        const baseColor = baseStyle.backgroundColor || '#000'; // Fallback color if undefined
+        const adjustedColor = this.adjustColor(baseColor, -20);
+
         return {
-            ...this.getBaseNodeStyle(node, index),
-            // Sizing
-            // width: `${baseWidth}%`,
-            // minHeight: '80px',
+            ...baseStyle,
 
             background: `linear-gradient(
                 135deg,
-                ${this.getBaseNodeStyle(node, index).backgroundColor} 0%,
-                ${this.adjustColor(this.getBaseNodeStyle(node, index).backgroundColor, -20)} 100%
+                ${baseColor} 0%,
+                ${adjustedColor} 100%
             )`,
 
             border: 'none',
@@ -65,13 +66,12 @@ export class PyramidDesign extends BaseDesign {
             padding: `${16 + levelDepth * 8}px ${24 + levelDepth * 12}px`,
 
             // Modern rounded corners
-            borderRadius: '16px',
+            borderRadius: '160px',
 
             // Smooth transitions
             transition: 'all 0.3s ease-in-out',
 
             display: 'flex',
-            flexDirection: 'column' as const,
             alignItems: 'center',
             justifyContent: 'center',
             gap: '8px',
