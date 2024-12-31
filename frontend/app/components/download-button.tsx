@@ -7,7 +7,7 @@ import {
 } from '@xyflow/react';
 import { toPng } from 'html-to-image';
 
-function downloadImage(dataUrl : string) {
+function downloadImage(dataUrl: string) {
     const a = document.createElement('a');
 
     a.setAttribute('download', 'reactflow.png');
@@ -27,11 +27,11 @@ function DownloadButton() {
             imageWidth,
             imageHeight,
             0.5,
-            2,
+            2
         );
 
         toPng(document.querySelector('.react-flow__viewport'), {
-            backgroundColor: '#fffff',
+            backgroundColor: '#ffffff',
             width: imageWidth,
             height: imageHeight,
             style: {
@@ -44,7 +44,10 @@ function DownloadButton() {
 
     return (
         <Panel position="bottom-right">
-            <button className="download-btn" onClick={onClick}>
+            <button
+                className="download-btn  rounded-lg p-4 text-white bg-blue-600"
+                onClick={onClick}
+            >
                 Download Image
             </button>
         </Panel>

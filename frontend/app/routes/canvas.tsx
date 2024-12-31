@@ -25,7 +25,7 @@ import {
 import { MultiStepLoader } from '~/components/ui/multi-loader';
 import DownloadButton from '~/components/download-button';
 
-const CustomNode =  ({ data }: any) => {
+const CustomNode = ({ data }: any) => {
     return (
         <div
             style={{
@@ -66,10 +66,13 @@ export default function App() {
     useEffect(() => {
         if (!generatedResults.length) return;
 
-        // @ts-ignore 
+        // @ts-ignore
         const design = designTemplates[selectedDesign];
         if (!design) {
-            console.error('Selected design template not found:', selectedDesign);
+            console.error(
+                'Selected design template not found:',
+                selectedDesign
+            );
             return;
         }
 
@@ -88,12 +91,14 @@ export default function App() {
                 }))
             );
 
-            const generatedEdges = generatedResults.slice(1).map((_, index) => ({
-                id: `e${index}-${index + 1}`,
-                source: `${index}`,
-                target: `${index + 1}`,
-                type: 'smoothstep',
-            }));
+            const generatedEdges = generatedResults
+                .slice(1)
+                .map((_, index) => ({
+                    id: `e${index}-${index + 1}`,
+                    source: `${index}`,
+                    target: `${index + 1}`,
+                    type: 'smoothstep',
+                }));
 
             setNodes(generatedNodes);
             setEdges(generatedEdges);
@@ -118,11 +123,14 @@ export default function App() {
         setCurrentState(0);
 
         try {
-            const results = await fetch('http://localhost:8000/api/v1/model/generate', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: inputText }),
-            });
+            const results = await fetch(
+                'http://localhost:8000/api/v1/model/generate',
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: inputText }),
+                }
+            );
 
             setCurrentState(1);
             const data = await results.json();
@@ -137,7 +145,7 @@ export default function App() {
         }
 
         setCurrentState(2);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         setIsGenerating(false);
     };
 
@@ -185,7 +193,7 @@ export default function App() {
                         >
                             <Background />
                             <Controls />
-                            <DownloadButton/>
+                            <DownloadButton />
                         </ReactFlow>
                         <select
                             value={selectedDesign}
@@ -193,7 +201,9 @@ export default function App() {
                             className="absolute top-4 right-4 z-10 bg-white border rounded p-2"
                         >
                             <option value="horizontal">Horizontal Flow</option>
-                            <option value="verticalTimeline">Vertical Timeline</option>
+                            <option value="verticalTimeline">
+                                Vertical Timeline
+                            </option>
                             <option value="circularFlow">Circular Flow</option>
                         </select>
                     </div>

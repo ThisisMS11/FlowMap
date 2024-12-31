@@ -151,3 +151,28 @@
 .bb {
     @apply border-2 border-black;
 }
+
+/* Available Fonts */
+.marvel-regular {
+    font-family: 'Marvel', serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.marvel-bold {
+    font-family: 'Marvel', serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.marvel-regular-italic {
+    font-family: 'Marvel', serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.marvel-bold-italic {
+    font-family: 'Marvel', serif;
+    font-weight: 700;
+    /* font-style: italic; */
+}
