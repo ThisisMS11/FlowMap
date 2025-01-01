@@ -1,6 +1,6 @@
 import type { NodeData, NodeStyle } from '@/app/types';
 import { BaseDesign } from './BaseDesign';
-import { brightColors } from '@/utils/util';
+// import { brightColors } from '@/utils/util';
 import {
     TimelineEdge,
     TimelineConnector,
@@ -43,7 +43,7 @@ export class TimelineDesign extends BaseDesign {
         });
     }
 
-    getNodeStyle(node: NodeData, index: number, totalNodes: number): NodeStyle {
+    getNodeStyle(node: NodeData, index: number, _totalNodes: number): NodeStyle {
         const baseColor = this.getBaseNodeStyle(node, index).backgroundColor;
 
         return {
@@ -53,7 +53,7 @@ export class TimelineDesign extends BaseDesign {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            // @ts-ignore 
+            // @ts-ignore
             flexDirection: 'column',
             padding: '20px',
             position: 'relative',

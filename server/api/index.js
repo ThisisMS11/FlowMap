@@ -3,7 +3,7 @@ import { json } from 'express';
 import { config } from 'dotenv';
 import cors from 'cors';
 // import connectDB from './config/connectDB.js';
-import model from './routes/model.js';
+import model from '../routes/model.js';
 // import user from './routes/user.js';
 
 config({ path: './config/config.env' });

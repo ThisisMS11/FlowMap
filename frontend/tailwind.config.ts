@@ -4,21 +4,21 @@ const {
 } = require('tailwindcss/lib/util/flattenColorPalette');
 export default {
     darkMode: ['class'],
-    content: ['./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}'],
+    content: ['./src/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}'],
     theme: {
         extend: {
             fontFamily: {
                 sans: [
-                    'Inter"',
+                    'Inter',
                     'ui-sans-serif',
                     'system-ui',
                     'sans-serif',
-                    'Apple Color Emoji"',
-                    'Segoe UI Emoji"',
-                    'Segoe UI Symbol"',
-                    'Noto Color Emoji"',
+                    '"Apple Color Emoji"',
+                    '"Segoe UI Emoji"',
+                    '"Segoe UI Symbol"',
+                    '"Noto Color Emoji"',
                 ],
-            },
+            },            
             borderRadius: {
                 lg: 'var(--radius)',
                 md: 'calc(var(--radius) - 2px)',

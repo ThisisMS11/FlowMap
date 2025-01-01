@@ -11,7 +11,10 @@ interface CustomNodeProps {
     };
 }
 
-const CustomNode: React.FC<CustomNodeProps> = ({ data, selected =false}: any) => {
+const CustomNode: React.FC<CustomNodeProps> = ({
+    data,
+    selected = false,
+}: any) => {
     const [title, setTitle] = useState(data.title || 'Untitled');
     const [isEditing, setIsEditing] = useState(false);
 
@@ -26,7 +29,6 @@ const CustomNode: React.FC<CustomNodeProps> = ({ data, selected =false}: any) =>
     return (
         <div className="relative" style={style}>
             <NodeResizer isVisible={selected} />
-
 
             {data.icon && (
                 <div className="mr-4 icon-container">
@@ -57,6 +59,3 @@ const CustomNode: React.FC<CustomNodeProps> = ({ data, selected =false}: any) =>
 };
 
 export default CustomNode;
-
-
-

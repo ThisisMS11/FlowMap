@@ -11,15 +11,15 @@ export class PyramidDesign extends BaseDesign {
     calculateLayout(
         nodes: NodeData[],
         canvasWidth: number,
-        canvasHeight: number
+        _canvasHeight: number
     ): any[] {
-        const levels = nodes.length;
+        // const levels = nodes.length;
         const centerX = canvasWidth / 2;
-        const levelHeight = canvasHeight / levels;
+        // const levelHeight = canvasHeight / levels;
 
         return nodes.map((node, index) => {
             // Calculate width of each level (wider at top, narrower at bottom)
-            const levelWidth = canvasWidth * ((levels - index) / levels);
+            // const levelWidth = canvasWidth * ((levels - index) / levels);
             const x = centerX;
             const y = 100 * index;
 
@@ -34,7 +34,7 @@ export class PyramidDesign extends BaseDesign {
     getNodeStyle(node: NodeData, index: number, totalNodes: number): NodeStyle {
         // Calculate level-based values
         const levelDepth = 1 - index / totalNodes; // 1 at top, smaller towards bottom
-        const baseWidth = 100 - (index / totalNodes) * 50; // Gets narrower towards bottom
+        // const baseWidth = 100 - (index / totalNodes) * 50; // Gets narrower towards bottom
 
         const baseStyle = this.getBaseNodeStyle(node, index);
         const baseColor = baseStyle.backgroundColor || '#000';
@@ -42,7 +42,7 @@ export class PyramidDesign extends BaseDesign {
 
         return {
             ...baseStyle,
-              // @ts-ignore 
+            // @ts-ignore
             background: `linear-gradient(
                 135deg,
                 ${baseColor} 0%,
@@ -105,7 +105,6 @@ export class PyramidDesign extends BaseDesign {
         }));
     }
 
-
     private adjustColor(color: string, amount: number): string {
         const clamp = (num: number) => Math.min(255, Math.max(0, num));
 
@@ -116,7 +115,8 @@ export class PyramidDesign extends BaseDesign {
         const b = parseInt(hex.substring(4, 6), 16);
 
         // Adjust each channel dynamically based on the amount
-        const adjust = (channel: number, factor: number) => Math.floor(channel * (1 + factor));
+        const adjust = (channel: number, factor: number) =>
+            Math.floor(channel * (1 + factor));
 
         // Apply adjustment to each RGB channel with a dynamic factor (percentage adjustment)
         const adjustedR = clamp(adjust(r, amount));

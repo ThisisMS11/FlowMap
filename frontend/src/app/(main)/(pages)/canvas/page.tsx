@@ -35,7 +35,7 @@ import { MultiStepLoader } from '@/components/ui/multi-loader';
 import DownloadButton from '@/components/download-button';
 import designs, { getDesignById } from '@/components/designs/index';
 import type { NodeData } from '@/app/types';
-import { sampleOutput } from '@/utils/sampleOutput';
+// import { sampleOutput } from '@/utils/sampleOutput';
 import CustomNode from '@/components/custom-node';
 import AnimatedDashedEdge from '@/components/custom-dashed-animated-edge';
 import { HexColorPicker } from 'react-colorful';
@@ -63,7 +63,7 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
     const [isGenerating, setIsGenerating] = useState(false);
     const [currentState, setCurrentState] = useState(0);
     const [generatedResults, setGeneratedResults] =
-        useState<GeneratedStep[]>(sampleOutput);
+        useState<GeneratedStep[]>([]);
     const [selectedDesignId, setSelectedDesignId] = useState('pyramid');
     const [inputText, setInputText] = useState('');
     const containerRef = useRef<HTMLDivElement>(null);
@@ -174,15 +174,13 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
 
         try {
             // Call to backend API
-            const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/model/generate`
-            const results = await fetch(
-                url,
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: inputText }),
-                }
-            );
+            const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/model/generate`;
+            console.log({ url });
+            const results = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: inputText }),
+            });
 
             setCurrentState(1);
             const data = await results.json();
@@ -211,7 +209,6 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
 
     const [bgColor, setBgColor] = useState('#FFFFFF');
 
-
     useEffect(() => {
         // const adjustedColor = adjustColor(bgColor, 15);
         setNodes((nds) =>
@@ -222,7 +219,7 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
                         data: {
                             ...node.data,
                             style: {
-                                // @ts-ignore 
+                                // @ts-ignore
                                 ...node.data.style,
                                 backgroundColor: bgColor,
                                 background: '',
@@ -235,8 +232,6 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
 
         console.log(nodes);
     }, [bgColor, setNodes]);
-
-
 
     return (
         <div className="flex h-screen w-full">
@@ -264,12 +259,11 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
 
                     <br />
                     <SidebarMenuItem>
-                        <div className='text-xl'> Select Node and Change color</div>
-                        <HexColorPicker
-                            color={bgColor}
-                            onChange={setBgColor}
-                        />
-
+                        <div className="text-xl">
+                            {' '}
+                            Select Node and Change color
+                        </div>
+                        <HexColorPicker color={bgColor} onChange={setBgColor} />
                     </SidebarMenuItem>
                 </SidebarContent>
             </Sidebar>
@@ -324,7 +318,7 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
                     </div>
                 ) : (
                     <div className="flex items-center justify-center h-full text-gray-500">
-                        No results to display. Enter input and click "Generate".
+                        No results to display. Enter input and click &quot;Generate&quot;.
                     </div>
                 )}
             </div>

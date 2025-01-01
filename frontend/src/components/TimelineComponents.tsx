@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const TimelineEdge: React.FC<any> = ({ style }) => (
+export const TimelineEdge: React.FC<any> = () => (
     <div
         style={{
             position: 'absolute',

@@ -26,11 +26,11 @@ function DownloadButton() {
             nodesBounds,
             imageWidth,
             imageHeight,
-            0.5,    
-            2,      
-            10 
+            0.5,
+            2,
+            10
         );
-        
+
         // @ts-ignore
         toPng(document.querySelector('.react-flow__viewport'), {
             backgroundColor: '#ffffff',
