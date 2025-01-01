@@ -19,8 +19,8 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-    title: 'InstaLive',
-    description: 'Will make you go live.',
+    title: 'flowchart',
+    description: 'make flow charts in second',
 };
 
 export default function RootLayout({

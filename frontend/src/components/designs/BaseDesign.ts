@@ -11,7 +11,7 @@ export abstract class BaseDesign implements Partial<DesignConfig> {
     protected baseNodeStyle: NodeStyle = {
         fontSize: '44px',
         padding: '16px 24px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+        // boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         color: '#1a202c',
     };
 

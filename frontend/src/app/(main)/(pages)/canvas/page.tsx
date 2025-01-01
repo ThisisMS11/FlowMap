@@ -36,9 +36,13 @@ import DownloadButton from '@/components/download-button';
 import designs, { getDesignById } from '@/components/designs/index';
 import type { NodeData } from '@/app/types';
 // import { sampleOutput } from '@/utils/sampleOutput';
-import CustomNode from '@/components/custom-node';
+import CustomNodePyramid from '@/components/custom-nodes/custom-node-pyramid';
+import CustomNode from '@/components/custom-nodes/custom-node';
+import GearNode from '@/components/custom-nodes/gear-node';
+import CustomCircularNode from '@/components/custom-nodes/custom-circular-node';
 import AnimatedDashedEdge from '@/components/custom-dashed-animated-edge';
 import { HexColorPicker } from 'react-colorful';
+
 interface CanvasProps {
     onSave?: (_nodes: Node[], _edges: Edge[]) => void;
     initialData?: {
@@ -62,14 +66,21 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
     );
     const [isGenerating, setIsGenerating] = useState(false);
     const [currentState, setCurrentState] = useState(0);
-    const [generatedResults, setGeneratedResults] =
-        useState<GeneratedStep[]>([]);
+    const [generatedResults, setGeneratedResults] = useState<GeneratedStep[]>([]);
     const [selectedDesignId, setSelectedDesignId] = useState('pyramid');
     const [inputText, setInputText] = useState('');
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Memoized values
-    const nodeTypes = useMemo(() => ({ customNode: CustomNode }), []);
+    const nodeTypes = useMemo(
+        () => ({
+            customNode: CustomNode,
+            customNodePyramid: CustomNodePyramid,
+            customCircularNode: CustomCircularNode,
+            gearNode: GearNode,
+        }),
+        []
+    );
     const edgeTypes = useMemo(
         () => ({ animatedDashedEdge: AnimatedDashedEdge }),
         []
@@ -215,17 +226,17 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
             nds.map((node) =>
                 node.selected
                     ? {
-                        ...node,
-                        data: {
-                            ...node.data,
-                            style: {
-                                // @ts-ignore
-                                ...node.data.style,
-                                backgroundColor: bgColor,
-                                background: '',
-                            },
-                        },
-                    }
+                          ...node,
+                          data: {
+                              ...node.data,
+                              style: {
+                                  // @ts-ignore
+                                  ...node.data.style,
+                                  backgroundColor: bgColor,
+                                  background: '',
+                              },
+                          },
+                      }
                     : node
             )
         );
@@ -318,7 +329,8 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
                     </div>
                 ) : (
                     <div className="flex items-center justify-center h-full text-gray-500">
-                        No results to display. Enter input and click &quot;Generate&quot;.
+                        No results to display. Enter input and click
+                        &quot;Generate&quot;.
                     </div>
                 )}
             </div>

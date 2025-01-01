@@ -1,12 +1,16 @@
 import { PyramidDesign } from './PyramidDesign';
+import { PyramidDesign2 } from './PyramidDesign2';
 import { CircularDesign } from './CircularDesign';
 import { TimelineDesign } from './TimeLineDesign';
+import { CircularDesign2 } from './Circular2Design';
+import { GearDesign } from './GearDesign';
 // Import other designs...
 
 const designs = [
-    new PyramidDesign(),
-    new CircularDesign(),
+    new PyramidDesign2(),
+    new CircularDesign2(),
     new TimelineDesign(),
+    new GearDesign(),
     // Add other designs...
 ];
 

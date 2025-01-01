@@ -4,7 +4,7 @@ import GlowDiv from '../glow-div';
 import { MoveRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import flowchart from '@/app/assets/flow-chart.png';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 export default function Hero() {
@@ -33,8 +33,13 @@ export default function Hero() {
                             </div>
 
                             <div className="flex items-center mt-2 gap-4">
-                                <Button className="flex" onClick={() => { router.push('/canvas') }}>
-                                    Quick Try 
+                                <Button
+                                    className="flex"
+                                    onClick={() => {
+                                        router.push('/canvas');
+                                    }}
+                                >
+                                    Quick Try
                                     <motion.div
                                         className="mx-2"
                                         animate={{ x: [0, 10, 0] }}
@@ -79,7 +84,13 @@ export default function Hero() {
                         <GlowDiv>
                             {/* @ts-ignore  */}
 
-                            <Image src={flowchart} alt='flow Chart Icon' width={225} height={225} className="text-black fill-black " />
+                            <Image
+                                src={flowchart}
+                                alt="flow Chart Icon"
+                                width={225}
+                                height={225}
+                                className="text-black fill-black "
+                            />
                         </GlowDiv>
                     </div>
                 </main>

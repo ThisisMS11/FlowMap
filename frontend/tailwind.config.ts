@@ -18,7 +18,7 @@ export default {
                     '"Segoe UI Symbol"',
                     '"Noto Color Emoji"',
                 ],
-            },            
+            },
             borderRadius: {
                 lg: 'var(--radius)',
                 md: 'calc(var(--radius) - 2px)',

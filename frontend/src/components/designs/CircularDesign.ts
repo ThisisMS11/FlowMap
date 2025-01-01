@@ -30,7 +30,11 @@ export class CircularDesign extends BaseDesign {
         });
     }
 
-    getNodeStyle(node: NodeData, index: number, _totalNodes: number): NodeStyle {
+    getNodeStyle(
+        node: NodeData,
+        index: number,
+        _totalNodes: number
+    ): NodeStyle {
         return {
             ...this.getBaseNodeStyle(node, index),
             borderRadius: '50%',

@@ -1,18 +1,13 @@
-import type { NodeData, NodeStyle } from '@/app/types';
+import { type NodeData, type NodeStyle } from '@/app/types';
 import { BaseDesign } from './BaseDesign';
-// import { brightColors } from '@/utils/util';
-import {
-    TimelineEdge,
-    TimelineConnector,
-} from '@/components/TimelineComponents';
 import { MarkerType } from '@xyflow/react';
-// import MyCircle from '@/app/assets/napkin-circle.png'
-export class TimelineDesign extends BaseDesign {
-    id = 'timeline';
-    name = 'Alternating Timeline';
-    description = 'Nodes alternating above and below a timeline';
-    category = 'linear' as const;
-    thumbnailIcon = 'Timeline';
+
+export class CircularDesign2 extends BaseDesign {
+    id = 'circular';
+    name = 'Circular Flow';
+    description = 'Nodes arranged in a circular pattern';
+    category = 'circular' as const;
+    thumbnailIcon = 'Circle';
 
     calculateLayout(
         nodes: NodeData[],
@@ -38,7 +33,7 @@ export class TimelineDesign extends BaseDesign {
                     ...node,
                     isTop,
                 },
-                type: 'customNode',
+                type: 'customCircularNode',
             };
         });
     }
@@ -48,24 +43,17 @@ export class TimelineDesign extends BaseDesign {
         index: number,
         _totalNodes: number
     ): NodeStyle {
-        const baseColor = this.getBaseNodeStyle(node, index).backgroundColor;
-
         return {
-            width: '250px',
-            height: 'fit-content',
-            borderRadius: '10%',
+            ...this.getBaseNodeStyle(node, index),
             display: 'flex',
+            // @ts-ignore
+            display: 'flex',
+            // @ts-ignore
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
             // @ts-ignore
-            flexDirection: 'column', // @ts-ignore
-            padding: '20px',
-            position: 'relative',
             transition: 'all 0.3s ease-in-out',
-            textAlign: 'center',
-            gap: '10px',
-            cursor: 'pointer',
-            zIndex: '2',
         };
     }
 
@@ -81,10 +69,4 @@ export class TimelineDesign extends BaseDesign {
             },
         }));
     }
-
-    // Custom edge components for timeline and connectors
-    customComponents = {
-        'custom-timeline-edge': TimelineEdge,
-        'custom-timeline-connector': TimelineConnector,
-    };
 }

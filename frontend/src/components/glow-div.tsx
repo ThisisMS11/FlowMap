@@ -17,7 +17,7 @@ export default function GlowDiv({
                     }}
                 >
                     {/* <motion.div className="borer-2 w-fit rounded-3xl px-4 py-4"> */}
-                        {children}
+                    {children}
                     {/* </motion.div> */}
                     <motion.div className="absolute inset-0 bg-gradient-to-br from-transparent to-gray-500 opacity-30" />
 

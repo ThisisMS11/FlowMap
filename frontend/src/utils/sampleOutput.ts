@@ -169,7 +169,7 @@ const sampleOutput = [
         ],
     },
     {
-        title: 'Establishing a Connection (TCP Handshake)',
+        title: 'TCP Handshake',
         icon: 'Handshake',
         subSteps: ['SYN', 'SYN-ACK', 'ACK', 'Connection Established'],
         position: 'above',
@@ -180,6 +180,49 @@ const sampleOutput = [
             'SYN-ACK',
             'ACK',
             'three-way handshake',
+        ],
+    },
+    {
+        title: 'Packet Traversal Over the Internet',
+        icon: 'Share2',
+        subSteps: ['Hop-by-Hop Routing', 'Network Layers Handling'],
+        position: 'above',
+        technicalTerms: [
+            'routers',
+            'hop-by-hop routing',
+            'routing table',
+            'Data Link layer',
+        ],
+    },
+    {
+        title: 'Destination Network & Server Processing',
+        icon: 'Server',
+        subSteps: [
+            'Arrival at the Destination Network',
+            'Internal Routing',
+            'TCP Processing',
+            'HTTP Request Processing',
+        ],
+        position: 'above',
+        technicalTerms: [
+            'MAC address',
+            'TCP segments',
+            'sequence numbers',
+            'HTTP request',
+            'HTTP response',
+            'HTML',
+        ],
+    },
+    {
+        title: 'Data Link and Transport Layer Processing',
+        icon: 'Computer',
+        subSteps: ['Frame Extraction', 'TCP Reassembly'],
+        position: 'above',
+        technicalTerms: [
+            'IP packet',
+            'TCP segments',
+            'sequence numbers',
+            'HTTP response',
         ],
     },
 ];

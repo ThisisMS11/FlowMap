@@ -1,0 +1,53 @@
+{
+    "id": "0",
+    "title": "DNS Resolution",
+    "icon": "Network",
+    "position": {
+        "x": 509.8088235294118,
+        "y": 2.236764705882365
+    },
+    "type": "customNode",
+    "data": {
+        "id": "0",
+        "title": "DNS Resolution",
+        "icon": "Network",
+        "position": {
+            "x": 562,
+            "y": 0
+        },
+        "type": "customNode",
+        "style": {
+            "fontSize": "44px",
+            "padding": "24px 36px",
+            "color": "#1a202c",
+            "backgroundColor": "#a24f4f",
+            "background": "",
+            "border": "none",
+            "outline": "1px solid rgba(255, 255, 255, 0.7)",
+            "boxShadow": "\n                0 8px 16px rgba(0, 0, 0, 0.1),\n                0 4px 8px rgba(0, 0, 0, 0.05),\n                inset 0 -2px 0 rgba(0, 0, 0, 0.1),\n                inset 0 2px 0 rgba(255, 255, 255, 0.1)\n            ",
+            "textAlign": "center",
+            "letterSpacing": "0.3px",
+            "borderRadius": "160px",
+            "transition": "all 0.3s ease-in-out",
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "center",
+            "gap": "8px",
+            "& svg": {
+                "width": "24px",
+                "height": "24px",
+                "opacity": 0.9
+            },
+            "&:hover": {
+                "transform": "translateY(-2px)",
+                "boxShadow": "\n                    0 12px 24px rgba(0, 0, 0, 0.15),\n                    0 6px 12px rgba(0, 0, 0, 0.1),\n                    inset 0 -2px 0 rgba(0, 0, 0, 0.15),\n                    inset 0 2px 0 rgba(255, 255, 255, 0.15)\n                "
+            }
+        }
+    },
+    "measured": {
+        "width": 320,
+        "height": 107
+    },
+    "selected": true,
+    "dragging": false
+}
