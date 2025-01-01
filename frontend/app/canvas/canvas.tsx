@@ -19,8 +19,6 @@ import {
     reconnectEdge,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import DynamicLucidIcon from '~/components/dynamic-lucid';
-import { brightColors } from 'utils/util';
 import { Button } from '~/components/ui/button';
 import { Textarea } from '~/components/ui/textarea';
 import {
@@ -33,13 +31,13 @@ import {
 import { MultiStepLoader } from '~/components/ui/multi-loader';
 import DownloadButton from '~/components/download-button';
 import designs, { getDesignById } from '../designs';
-import type { NodeData, DesignConfig } from '../types';
+import type { NodeData } from '../types';
 import { sampleOutput } from 'utils/sampleOutput';
 import CustomNode from '~/components/custom-node';
 import AnimatedDashedEdge from '~/components/custom-dashed-animated-edge';
 import { HexColorPicker } from 'react-colorful';
 interface CanvasProps {
-    onSave?: (nodes: Node[], edges: Edge[]) => void;
+    onSave?: (_nodes: Node[], _edges: Edge[]) => void;
     initialData?: {
         nodes: Node[];
         edges: Edge[];
@@ -62,7 +60,7 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
     const [isGenerating, setIsGenerating] = useState(false);
     const [currentState, setCurrentState] = useState(0);
     const [generatedResults, setGeneratedResults] =
-        useState<GeneratedStep[]>([]);
+        useState<GeneratedStep[]>(sampleOutput);
     const [selectedDesignId, setSelectedDesignId] = useState('pyramid');
     const [inputText, setInputText] = useState('');
     const containerRef = useRef<HTMLDivElement>(null);
@@ -173,7 +171,7 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
 
         try {
             // Call to backend API
-            const url = `${import.meta.env.SERVER_URL}/api/v1/model/generate`
+            const url = `${import.meta.env.VITE_SERVER_URL}/api/v1/model/generate`
             const results = await fetch(
                 url,
                 {
@@ -210,28 +208,6 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
 
     const [bgColor, setBgColor] = useState('#FFFFFF');
 
-    const adjustColor = (color: string, amount: number): string => {
-        const clamp = (num: number) => Math.min(255, Math.max(0, num));
-
-        // Convert hex to RGB
-        const hex = color.replace('#', '');
-        const r = parseInt(hex.substring(0, 2), 16);
-        const g = parseInt(hex.substring(2, 4), 16);
-        const b = parseInt(hex.substring(4, 6), 16);
-
-        // Adjust each channel dynamically based on the amount
-        const adjust = (channel: number, factor: number) => Math.floor(channel * (1 + factor));
-
-        // Apply adjustment to each RGB channel with a dynamic factor (percentage adjustment)
-        const adjustedR = clamp(adjust(r, amount));
-        const adjustedG = clamp(adjust(g, amount));
-        const adjustedB = clamp(adjust(b, amount));
-
-        // Convert back to hex
-        const toHex = (n: number) => n.toString(16).padStart(2, '0');
-        return `#${toHex(adjustedR)}${toHex(adjustedG)}${toHex(adjustedB)}`;
-    }
-
 
     useEffect(() => {
         // const adjustedColor = adjustColor(bgColor, 15);
@@ -243,9 +219,10 @@ const Canvas: React.FC<CanvasProps> = ({ onSave, initialData }) => {
                         data: {
                             ...node.data,
                             style: {
+                                // @ts-ignore 
                                 ...node.data.style,
-                                backgroundColor: bgColor, // Set the backgroundColor here
-                                background: '', // Ensure that background shorthand is cleared
+                                backgroundColor: bgColor,
+                                background: '',
                             },
                         },
                     }

@@ -1,34 +1,11 @@
-import React from 'react';
 import { Button } from '../../components/ui/button';
-// import { AvatarCirclesDemo } from '../ui/avatar-demo';
 import { Calendar, TrendingUp, Video } from 'lucide-react';
 import GlowDiv from '../glow-div';
-// import GoogleIcon from '@/app/assets/google.svg';
 import { MoveRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { NavLink } from "react-router";
 import flowchart from '../../assets/flow-chart.png'
 
-function GoogleSignButton() {
-  return (
-    <Button
-      className="w-fit flex justify-center items-center p-4 border rounded-full font-light text-gray-900 hover:bg-gray-200 focus:outline-none focus:ring-2  cursor-pointer z-10"
-      style={{ pointerEvents: 'auto' }}
-      onClick={async () => {
-        console.log('clicked');
-      }}
-    >
-      {/* <Image
-        src={GoogleIcon.src}
-        className="w-5 h-5 mr-4"
-        alt="Github Icon"
-        width={25}
-        height={25}
-      /> */}
-      Continue With Google
-    </Button>
-  );
-}
 
 export default function Hero() {
 

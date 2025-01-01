@@ -53,6 +53,7 @@ export class TimelineDesign extends BaseDesign {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            // @ts-ignore 
             flexDirection: 'column',
             padding: '20px',
             position: 'relative',

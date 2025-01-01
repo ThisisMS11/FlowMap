@@ -42,7 +42,7 @@ export class PyramidDesign extends BaseDesign {
 
         return {
             ...baseStyle,
-
+              // @ts-ignore 
             background: `linear-gradient(
                 135deg,
                 ${baseColor} 0%,

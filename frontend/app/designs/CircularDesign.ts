@@ -34,6 +34,7 @@ export class CircularDesign extends BaseDesign {
         return {
             ...this.getBaseNodeStyle(node, index),
             borderRadius: '50%',
+            // @ts-ignore 
             background: `linear-gradient(135deg, #f8fafc, #e2e8f0)`,
             width: 'fit-content',
             height: '120px',

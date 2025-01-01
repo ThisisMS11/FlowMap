@@ -19,6 +19,16 @@ app.use(cors());
 // app.use('/api/v1/user', user);
 app.use('/api/v1/model', model);
 
+// Add this to handle the root route
+app.get('/', (req, res) => {
+    res.json({ message: 'Welcome to the API' });
+});
+
+// Add this to handle undefined routes
+app.use('*', (req, res) => {
+    res.status(404).json({ error: 'Not Found' });
+});
+
 /* Uncomment to connect to the database */
 // connectDB();
 
